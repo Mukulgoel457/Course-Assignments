@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+
+\title{\textbf{Lecture 35 - Information Theory and Entropy}}
+\author{\textbf{Mukul Goel}}
+\date{\textbf{Roll Number : 220108037}}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+
+Information Theory, developed by Claude E. Shannon, provides a mathematical framework for understanding communication, data compression, and transmission efficiency. At its core, the theory quantifies \textbf{"information"} as a reduction of uncertainty about a message or event. Shannon introduced \textbf{"entropy"} to measure the average information produced by a source, laying the groundwork for data compression and encoding methods. This document explores key concepts in Information Theory, including information content, entropy, and mutual information, which together form the foundation for efficient data transmission and error management in digital systems.
+
+\section*{Written Language and Symbols}
+
+In written language, there are 27 symbols:
+\begin{itemize}
+    \item 26 letters of the alphabet and one for the space.
+\end{itemize}
+
+These \textbf{27 symbols are sufficient for communication in English} and serve as the building blocks for encoding any message in the language. Each symbol's frequency of occurrence can vary, affecting the overall efficiency of encoding in terms of information content.
+
+\section*{Symbol Set and Codebook}
+
+Let us define a set \( A \) representing the possible symbols used for communication:
+\[
+\mathbf{A = \{a_1, a_2, \dots, a_n\}}
+\]
+where each symbol \( a_i \) has a probability \( p_i \) of occurring. These probabilities depend on the language or data source. In English, for example, certain letters (like 'e' and 't') appear more frequently, while others are rare (like 'z' and 'q').
+
+The \textbf{codebook \( A \) is the complete set of symbols}, each with its probability. We are interested in:
+\begin{enumerate}
+    \item The information conveyed by each symbol.
+    \item The information conveyed by a combination of symbols.
+    \item The average information conveyed per symbol.
+    \item The average information conveyed by a sequence of symbols.
+\end{enumerate}
+
+\section*{Information Theory by Claude E. Shannon}
+
+Shannon's theory is foundational to understanding the limits of data compression and reliable communication over noisy channels. For a codebook \( A \), each symbol represents an outcome of a random experiment. The information \( I(a_k) \) associated with the \( k \)-th symbol \( a_k \), which occurs with probability \( p_k \), is defined as:
+\[
+\mathbf{I(a_k) = -\log_2 p_k \text{ bits}}
+\]
+The choice of base-2 logarithm reflects that information is often measured in bits, suitable for binary digital systems.
+
+A source emitting symbols independently, without memory of past symbols, is termed a \textbf{Discrete Memoryless Source (DMS)}.
+
+\subsection*{Properties of Information Content}
+\begin{itemize}
+    \item \( \mathbf{I(a_k) = -\log_2 p_k} \): Information decreases as the probability increases; \textbf{rare events carry more information}.
+    \item \( \mathbf{I(a_k) \geq 0} \): Information content is non-negative, as probabilities are between 0 and 1.
+    \item For independent symbols \( a_k \) and \( a_j \), \( \mathbf{I(a_k, a_j) = I(a_k) + I(a_j)} \).
+\end{itemize}
+
+\section*{Entropy: Average Information of a Codebook}
+
+\textbf{Entropy, denoted as \( H(A) \), is a measure of the average uncertainty or information produced by a random source of symbols}. It reflects the unpredictability of a message source and is often considered the amount of \textbf{"surprise"} associated with a sequence of symbols. Higher entropy indicates greater uncertainty and more information per symbol on average, while lower entropy suggests predictability and less information per symbol.
+
+For a codebook \( A = \{a_1, a_2, \dots, a_n\} \) with each symbol \( a_i \) having a probability \( p_i \), the entropy is given by:
+\[
+\mathbf{H(A) = -\sum_{i} p_i \log_2 p_i}
+\]
+Here, \( \log_2 p_i \) measures the information content of each symbol, and the weighted sum represents the average information across all possible symbols.
+
+\textbf{Entropy is measured in bits when the logarithm is base 2}. For example, if every symbol has an equal probability of \( \frac{1}{N} \), entropy reaches its maximum value of \( \log_2 N \), indicating complete uncertainty. Conversely, if one symbol has a probability of 1, entropy is zero, meaning no uncertainty.
+
+\subsection*{Properties of Entropy}
+Entropy has several key properties:
+\begin{itemize}
+    \item \( \mathbf{H(A) \geq 0} \): Entropy is always non-negative, as probabilities are between 0 and 1.
+    \item Entropy is maximized when all symbols are equally likely, \( \mathbf{p_i = \frac{1}{N}} \).
+    \item Lower entropy implies greater predictability, which can lead to more efficient encoding.
+\end{itemize}
+
+\subsection*{Entropy Calculations for a Binary Source}
+
+For a binary source with symbols \( A = \{a_0, a_1\} \) and probabilities \( p \) and \( 1 - p \), entropy \( H(p) \) is:
+\[
+\mathbf{H(p) = -p \log_2 p - (1 - p) \log_2 (1 - p)}
+\]
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{entropy_graph.jpg}
+    \caption{Entropy \( H(p) \) for a binary source}
+\end{figure}
+
+\subsection*{Special Cases}
+\begin{itemize}
+    \item \( \mathbf{p = 0} \) or \( \mathbf{p = 1} \): \( \mathbf{H(p) = 0} \). Maximum predictability.
+    \item \( \mathbf{p = \frac{1}{2}} \): \( \mathbf{H(p) = 1} \) bit. Maximum entropy, representing complete uncertainty.
+\end{itemize}
+
+\subsection*{Entropy for \( N \)-Symbol Discrete Distribution}
+
+For a codebook with \( N \) symbols, entropy \( H(A) \) is bounded:
+\[
+\mathbf{0 \leq H(A) \leq \log_2 N}
+\]
+The maximum entropy occurs when all symbols are equally likely \( \mathbf{p_i = \frac{1}{N}} \).
+
+\subsection*{Derivation of Entropy Maximum}
+
+If \( \mathbf{p_1 = p_2 = \dots = p_N = \frac{1}{N}} \), then:
+\[
+\mathbf{H(A) = -\sum_{i=1}^{N} \frac{1}{N} \log_2 \frac{1}{N} = \log_2 N}
+\]
+
+This represents the entropy of a uniform distribution, where the source has maximum unpredictability.
+
+\subsection*{Joint and Conditional Entropy}
+
+For a joint distribution of two symbols \( X \) and \( Y \), \textbf{joint entropy} \( H(X, Y) \) is:
+\[
+\mathbf{H(X, Y) = -\sum_{x,y} p(x, y) \log_2 p(x, y)}
+\]
+
+\textbf{Conditional entropy}, the uncertainty of \( Y \) given \( X \), is:
+\[
+\mathbf{H(Y|X) = -\sum_{x,y} p(x, y) \log_2 p(y|x)}
+\]
+
+\section*{Mutual Information}
+
+\textbf{Mutual information} quantifies the amount of information that one random variable \( X \) contains about another random variable \( Y \). It measures the reduction in uncertainty about \( Y \) when we know the value of \( X \), and vice versa. In essence, mutual information reflects the dependency between \( X \) and \( Y \): \textbf{the more dependent they are, the more information they share, and the higher the mutual information}.
+
+Mathematically, mutual information \( I(X; Y) \) is defined as:
+\[
+\mathbf{I(X; Y) = H(X) + H(Y) - H(X, Y)}
+\]
+where:
+\begin{itemize}
+    \item \( \mathbf{H(X)} \) is the entropy of \( X \), representing the uncertainty in \( X \) alone.
+    \item \( \mathbf{H(Y)} \) is the entropy of \( Y \), representing the uncertainty in \( Y \) alone.
+    \item \( \mathbf{H(X, Y)} \) is the joint entropy of \( X \) and \( Y \), representing the uncertainty in both \( X \) and \( Y \) together.
+\end{itemize}
+
+An equivalent expression for mutual information is:
+\[
+\mathbf{I(X; Y) = \sum_{x, y} p(x, y) \log_2 \frac{p(x, y)}{p(x) p(y)}}
+\]
+This form shows that \textbf{mutual information is based on the joint probability \( p(x, y) \) of \( X \) and \( Y \) and their individual probabilities}. If \( X \) and \( Y \) are independent, \( p(x, y) = p(x)p(y) \), so \( I(X; Y) = 0 \), indicating no shared information. However, if \( X \) and \( Y \) are strongly dependent, \( I(X; Y) \) will be positive, with higher values indicating stronger dependency.
+
+
+\section*{Summary of Information Theory Concepts}
+
+\begin{enumerate}
+    \item Information is inversely proportional to an event's likelihood; rarer events carry more information.
+    \item Entropy measures the average information (uncertainty) of a random source.
+    \item Joint and conditional entropy expand the concepts of uncertainty in multi-variable distributions.
+    \item Mutual information measures the reduction in uncertainty of one variable given knowledge of another.
+\end{enumerate}
+
+\section*{References}
+
+\begin{enumerate}
+    \item \textbf{Communication System by Dr. Simon Haykin(4th Ed)}.
+    \item \textbf{Insightful Lecture from Dr. Ribhu Chopra.}
+    \item Google
+\end{enumerate}
+
+\end{document}
